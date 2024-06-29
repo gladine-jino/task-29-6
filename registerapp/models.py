@@ -24,7 +24,7 @@ class User(AbstractUser):
     REQUIRED_FIELDS = ['username']
 
     def generate_unique_code(cls):
-        characters = string.ascii_letters + string.digits  # A-Z, a-z, 0-9
+        characters = string.ascii_letters + string.digits  
         while True:
             code = ''.join(random.choice(characters) for _ in range(7))
             if not User.objects.filter(code=code).exists():

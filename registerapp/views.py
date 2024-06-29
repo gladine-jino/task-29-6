@@ -7,12 +7,12 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import authenticate,logout
 from .models import User
 from django.http import HttpResponse
-# from django.contrib.auth.decorators import login_required
 
 
 
 
-# @login_required
+
+
 def register(request):
     if request.method=="POST":
         form = RegisterForm(request.POST)      
@@ -23,9 +23,7 @@ def register(request):
             user.code=access_code
             user.save()
             # User.objects.create(user_profile=user, code=access_code) 
-            return render(request,'registerapp/login.html', {'access_code':access_code})         
-          
-            
+            return render(request,'registerapp/login.html', {'access_code':access_code})       
         else:
             print(form.errors)
             return render(request,'registerapp/register.html', {'form':form})             
@@ -51,18 +49,18 @@ def login_view(request):
                 user=User.objects.filter(email=username,code=password).first()
                 print(user)           
                 if user:                
-                        # auth_login(request,user)
+                       
                         messages.success(request, f'Welcome{username}') 
                         return HttpResponse("Success")                         
                 else:
                     messages.error(request,'Please enter correct username and password')    
                     return render(request,'registerapp/login.html',{'form':form,'access_code':acc_code})  
             else:
-                print(form.errors)
+                
                 messages.error(request,'Please enter correct username and password')  
                 return render(request,'registerapp/login.html',{'form':form})        
         else:
-            print(form.errors)
+            
             messages.error(request,'Please enter correct username password') 
             return render(request,'registerapp/login.html',{'form':form})     
     else:      
